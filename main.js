@@ -621,6 +621,21 @@ function update() {
   ctx.clearRect(0, 0, width, height);
   playerJump();
 }   
+document.addEventListener('touchmove', function(e) {
+  e.preventDefault();
+}, { passive: false });
+
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(
+    caches.match(event.request)
+      .then(function(response) {
+        return response || fetch(event.request);
+      })
+  );
+});
+
+
 
 menuLoop = function() {
   update();
